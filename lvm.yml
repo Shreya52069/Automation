@@ -1,0 +1,18 @@
+- hosts: localhost
+  tasks:
+    - include_vars: "/root/cloud/var.yml"
+    - lvol:
+       vg: mycloud
+       lv: "{{na}}"
+       size: "{{sa}}"
+      ignore_errors: yes
+    - filesystem:
+       fstype: ext4
+       dev: "/dev/mycloud/{{na}}"
+      ignore_errors: yes
+    - mount:
+       name: "/mnt/{{na}}"
+       src: "/dev/mycloud/{{na}}"
+       fstype: ext4
+       state: mounted
+      ignore_errors: yes
