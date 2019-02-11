@@ -1,0 +1,33 @@
+- hosts: localhost
+  tasks:
+   - selinux: 
+      policy: targeted
+      state: permissive
+   - package:
+      name: "httpd"
+      state: present
+   - file:
+      path: "/var/www/mylw"
+      state: directory
+      owner: "apache"
+   - copy:
+      dest: "/etc/httpd/conf.d/skg.conf" 
+      src: "kio.conf"
+      owner: "apache"
+   - copy:
+      dest: "/var/www/mylw/jd.html"
+      content: "This is shreya via ansible!"
+      owner: "apache"
+   - service:
+      name: "httpd"
+      state: restarted
+      enabled: yes
+   - firewalld:
+      state: enabled
+      port: 2040/tcp
+      immediate: true
+      permanent: true 
+   - lineinfile:
+      dest: "/var/www/mysb/jd.html"
+      line: "Hello lw"
+      state: present
